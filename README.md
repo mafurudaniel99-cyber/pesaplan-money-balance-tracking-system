@@ -51,7 +51,7 @@ Deploy the application locally by executing the following environment configurat
 
 ```bash
 # Clone the repository and navigate to the root directory
-git clone [https://github.com/mafurudaniel99-cyber/expense-tracker.git](https://github.com/mafurudaniel99-cyber/expense-tracker.git) && cd expense-tracker
+git clone https://github.com/mafurudaniel99-cyber/safespend-digital-wallet-and-balance-tracking-system.git && cd safespend-digital-wallet-and-balance-tracking-system
 
 # Import the standard database schema export file into your local DBMS
-mysql -u root -p database_name < database.sql
+mysql -u root -p database_name < safespend.sql
