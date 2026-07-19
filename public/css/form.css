@@ -1,0 +1,13 @@
+form{margin-top:2%;
+    box-sizing:border-box;
+    border:2px solid blue;
+
+    display:flex;
+      flex-direction:column;
+      width: 80%;
+      margin-left:10%;
+               }
+               #form_div{   display:flex;
+      flex-direction:row; justify-content:space-evenly; width:100%;}
+    input{padding:7%;width:100%;}
+    button{width:30%; margin-left:30%; margin-top:2%;}
