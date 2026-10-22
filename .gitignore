@@ -1,0 +1,26 @@
+# PesaPlan — exclude sensitive and build files from version control
+
+# Configuration with credentials
+config/database.php
+
+# Storage
+storage/logs/*
+!storage/logs/.gitkeep
+storage/exports/*
+!storage/exports/.gitkeep
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Composer (if added later)
+vendor/
+
+# PHPUnit
+.phpunit.result.cache

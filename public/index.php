@@ -1,56 +1,32 @@
-<?php 
-    session_start();
-    include("connect.php");
-    if(!isset($_SESSION['username'])){
-        header("Location:login.php");
-        exit();
-    }?>
+<?php
+/**
+ * PesaPlan — Front Controller (public/index.php)
+ * All non-asset requests enter here. Apache rewrites via .htaccess.
+ */
 
-<!DOCTYPE html> 
-<html> 
-<head> 
-    <title>Homepage</title> 
+declare(strict_types=1);
 
-    <link rel="stylesheet" href="safe.css"> 
-       <style>
-        input{width:50%;padding:1%; margin-right:none; 
-        border-left:1px solid blue;border-right-style:none;
-        border-radius:20px;}
+define('BASE_PATH', dirname(__DIR__));
 
-        button{margin-left:none;background-color:none;
-        border-left-style:none; font-size:30px;color:none;}
+// Autoload our App\ namespace (PSR-4 style without Composer).
+spl_autoload_register(function (string $class) {
+    $prefix = 'App\\';
+    if (!str_starts_with($class, $prefix)) return;
+    $relative = substr($class, strlen($prefix));
+    $relative = str_replace('\\', '/', $relative);
+    $file = BASE_PATH . '/app/' . $relative . '.php';
+    if (file_exists($file)) require $file;
+});
 
-        form{display:flex;flex-direction:row;height:0.5%;
-        justify-content:space-evenly; margin-top:none;
-         width:30%;margin-left:40%;border-radius:20px;}
-       </style>
-</head> 
-<body> 
- 
-<header> 
-    <h1>SAFESPEND</h1> 
- 
-    <nav> 
-        <a href="index.php">Home</a> 
-        <a href="add_item.php">Add</a> 
-         <a href="calculator.php">Calculator</a>
-        <a href="pocket_balance.php">Balance</a> 
-        <a href="logout.php">Logout</a>
-    </nav> 
-</header> 
- 
-<section class="hero" style="margin-top:10%;"> 
-    <h2>Track your life expense</h2> 
-    
-    <p>Retrive your dail usage, measure your spending habit and recorganize the deviations.</p> 
-</section> 
- <form   method="POST"   >
-            
-            <input type="search" name="q" class="search_input" 
-            placeholder="Search anything..." autocomplete="on" autofocus required>
-            <button name="submit" style="background-color:none;">🔍</button>
-        </form>
- 
-</body> 
-</html> 
- 
+// Load helper functions.
+require BASE_PATH . '/app/Helpers/helpers.php';
+
+// Load configuration.
+$config = require BASE_PATH . '/config/app.php';
+
+use App\Core\App;
+
+$GLOBALS['app'] = $app = new App($config);
+$app->configureDatabase();
+$app->loadRoutes();
+$app->dispatch();

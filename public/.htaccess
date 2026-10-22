@@ -1,0 +1,29 @@
+# PesaPlan — Apache rewrite rules
+# Place this file in public/ alongside index.php
+
+RewriteEngine On
+
+# Allow direct access to assets (css, js, images)
+RewriteCond %{REQUEST_URI} ^/assets/ [NC]
+RewriteRule ^ - [L]
+
+# Send everything else through index.php (front controller)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "\.(sql|md|log|env|example)$">
+    Require all denied
+</FilesMatch>
